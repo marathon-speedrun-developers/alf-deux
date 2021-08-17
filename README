@@ -1,7 +1,8 @@
-# Aleph One #
+# alf deux #
 
-Aleph One is the open source continuation of Bungie's Marathon 2 FPS game
-engine. Aleph One plays Marathon, Marathon 2, Marathon Infinity, and 3rd-party
+alf-deux is a port the 1.4 stable release of AlephOne, mainly for the purposes of speedrunning, in addition to fixes and (planned) features regarding film playback.
+
+Aleph One plays Marathon, Marathon 2, Marathon Infinity, and 3rd-party
 content on a wide array of platforms, with (optional) OpenGL rendering,
 Internet play, Lua scripting, and more.
 
