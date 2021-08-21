@@ -20,6 +20,14 @@ LUA_PLAYER.CPP
 	Implements the Lua Player class
 */
 
+/* 
+
+alf-deux backports:
+
+d5386adf3f9296bbd1001cff21f611344c50e507 Fix missing ending row in Lua_HotkeyBinding_Get array 
+
+*/
+
 #include "ActionQueues.h"
 #include "alephversion.h"
 #include "computer_interface.h"
@@ -411,6 +419,7 @@ const luaL_Reg Lua_HotkeyBinding_Get[] = {
 	{"joystick", Lua_HotkeyBinding_Get_Binding<type_joystick>},
 	{"key", Lua_HotkeyBinding_Get_Binding<type_keyboard>},
 	{"mouse", Lua_HotkeyBinding_Get_Binding<type_mouse>},
+	{0, 0}
 };
 
 char Lua_HotkeyBindings_Name[] = "hotkey_bindings";

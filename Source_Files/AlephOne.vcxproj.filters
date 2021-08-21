@@ -1,4 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- alf deux backports:
+
+36a050619f2070575b4fe41cc02b11362a182168 Update vs solution with A1 1.4 new files
+5a484095f9816f118c5e16c377bd37f77641a279 Update VS solution to manage dependencies with custom nuget packages 
+
+ -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -730,6 +736,12 @@
     <ClCompile Include="Lua\lua_ephemera.cpp">
       <Filter>Lua\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="shell_options.cpp">
+      <Filter>Main\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld\interpolated_world.cpp">
+      <Filter>GameWorld\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSeries\BStream.h">
@@ -1419,6 +1431,12 @@
     <ClInclude Include="Lua\lua_ephemera.h">
       <Filter>Lua\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="shell_options.h">
+      <Filter>Main\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWorld\interpolated_world.h">
+      <Filter>GameWorld\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Resources\Windows\alephone.rc">
@@ -1433,5 +1451,8 @@
     <ResourceCompile Include="..\Resources\Windows\marathon-infinity.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+	<None Include="packages.config" />
   </ItemGroup>
 </Project>
