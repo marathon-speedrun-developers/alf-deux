@@ -26,6 +26,9 @@ Aug 14, 2000 (Loren Petrich):
 	Turned collection and shading-table handles into pointers,
 	because handles are needlessly MacOS-specific,
 	and because these are variable-format objects.
+
+Aug 08, 2021 (Obsidian)
+  Added following backport from A1 - 606411dec845266871c339ba2705014d67855b2e : Fix memory leak
 */
 
 #include "shape_descriptors.h"
@@ -44,7 +47,7 @@ struct collection_header /* 32 bytes on disk */
 
 	// LP: handles to pointers
 	collection_definition *collection;
-	byte *shading_tables;
+	std::vector<byte> shading_tables;
 };
 const int SIZEOF_collection_header = 32;
 
