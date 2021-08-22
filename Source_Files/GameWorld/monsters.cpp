@@ -89,6 +89,9 @@ Oct 26, 2000 (Mark Levin)
 
 Jan 12, 2003 (Loren Petrich)
 	Added controllable damage kicks
+
+Aug 21, 2021 (Obsidian)
+ Added backport of following commit from A1 Upstream - ff51a1a076b6a19edbc852d1943a6a47eedbe37b : Fix crash when killing monster ticks from M1
 */
 
 #include <string.h>
@@ -238,7 +241,7 @@ struct damage_kick_definition damage_kick_definitions[NUMBER_OF_DAMAGE_TYPES] =
 #include "monster_definitions.h"
 
 // LP addition: growable list of intersected objects
-static vector<short> IntersectedObjects;
+//static vector<short> IntersectedObjects;
 
 /* ---------- private prototypes */
 
@@ -1284,7 +1287,8 @@ short legal_player_move(
 
 	get_monster_dimensions(monster_index, &radius, &height);	
 	
-	IntersectedObjects.clear();
+	//IntersectedObjects.clear();
+	std::vector<short> IntersectedObjects;
 	possible_intersecting_monsters(&IntersectedObjects, LOCAL_INTERSECTING_MONSTER_BUFFER_SIZE, object->polygon, true);
 	monster_count = IntersectedObjects.size();
 	for (size_t i=0;i<monster_count;++i)
@@ -1356,7 +1360,9 @@ short legal_monster_move(
 
 	get_monster_dimensions(monster_index, &radius, &height);	
 	
-	IntersectedObjects.clear();
+	//IntersectedObjects.clear();
+	std::vector<short> IntersectedObjects; 
+
 	possible_intersecting_monsters(&IntersectedObjects, LOCAL_INTERSECTING_MONSTER_BUFFER_SIZE, object->polygon, true);
 	monster_count= IntersectedObjects.size();
 	for (size_t i=0;i<monster_count;++i)
@@ -1432,7 +1438,8 @@ void damage_monsters_in_radius(
 
 	(void) (primary_target_index);
 	
-	IntersectedObjects.clear();
+	//IntersectedObjects.clear();
+	std::vector<short> IntersectedObjects;
 	possible_intersecting_monsters(&IntersectedObjects, LOCAL_INTERSECTING_MONSTER_BUFFER_SIZE, epicenter_polygon_index, false);
 	object_count= IntersectedObjects.size();
         struct object_data *aggressor = NULL;
