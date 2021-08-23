@@ -608,21 +608,28 @@ static void update_view_data(
 	angle theta;
 
 	// LP change: doing all the FOV changes here:
+	int min = 5;
+	int max = 360;
+	int randNum = rand() % (max - min + 1) + min;
+	if (randNum == 360)
+	{
+		randNum = 0;
+	}
 	
-	View_AdjustFOV(view->field_of_view,view->target_field_of_view * 2 *4 *6 *8 *10 );
+	View_AdjustFOV(view->field_of_view, view->target_field_of_view = randNum); //Random FOV between 5 and 360 baby!
 	
 	if (view->effect==NONE)
 	{
-		view->world_to_screen_x = view->real_world_to_screen_y * 2  ;
-		view->world_to_screen_y = view->real_world_to_screen_x * 2 * 4  ;
+		view->world_to_screen_x = view->real_world_to_screen_y ;
+		view->world_to_screen_y = view->real_world_to_screen_x ;
 	}
 	else
 	{
 		update_render_effect(view);
 	}
 	
-	view->untransformed_left_edge.i= view->world_to_screen_x * 2 * 4 * 6 * 8 * 10; //x2 this for idk
-	view->untransformed_right_edge.i= - view->world_to_screen_x * 2 * 4 * 6 * 8 * 10; //x2 for comedic effect
+	view->untransformed_left_edge.i= view->world_to_screen_x; //x2 this for idk
+	view->untransformed_right_edge.i= - view->world_to_screen_x; //x2 for comedic effect
 	
 	/* calculate world_to_screen_y*tan(pitch) */
 	view->dtanpitch= (view->world_to_screen_y*sine_table[view->pitch])/cosine_table[view->pitch];
