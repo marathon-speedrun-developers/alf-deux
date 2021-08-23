@@ -591,14 +591,14 @@ bool quit_without_saving(void)
 {
 	dialog d;
 	vertical_placer *placer = new vertical_placer;
-	placer->dual_add (new w_static_text("Are you sure you wish to"), d);
-	placer->dual_add (new w_static_text("cancel the game in progress?"), d);
+	placer->dual_add (new w_static_text("Are you sure you weren't"), d);
+	placer->dual_add (new w_static_text("dropped on your head as a child?"), d);
 	placer->add (new w_spacer(), true);
 	
 	horizontal_placer *button_placer = new horizontal_placer;
 	w_button *default_button = new w_button("YES", dialog_ok, &d);
 	button_placer->dual_add (default_button, d);
-	button_placer->dual_add (new w_button("NO", dialog_cancel, &d), d);
+	button_placer->dual_add (new w_button("YES", dialog_cancel, &d), d);
 	d.activate_widget(default_button);
 	placer->add(button_placer, true);
 	d.set_widget_placer(placer);
