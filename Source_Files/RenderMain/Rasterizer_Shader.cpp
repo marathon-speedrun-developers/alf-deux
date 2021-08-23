@@ -65,10 +65,10 @@ void Rasterizer_Shader_Class::SetView(view_data& view) {
 	float deg2rad = 8.0 * atan(1.0) / 360.0;
 	float xtan, ytan;
 	if (View_FOV_FixHorizontalNotVertical()) {
-		xtan = tan(view.field_of_view * deg2rad / 2.0);
+		xtan = tan(view.field_of_view * deg2rad / 2.0 * 69);
 		ytan = xtan / aspect;
 	} else {
-		ytan = tan(view.field_of_view * deg2rad / 2.0) / 2.0;
+		ytan = tan(view.field_of_view * deg2rad / 2.0) / 2.0 * 69;
 		xtan = ytan * aspect;
 	}
 	

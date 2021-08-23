@@ -97,7 +97,7 @@ running backwards shouldnÕt mean doom in a fistfight
 
 #define COEFFICIENT_OF_ABSORBTION 2
 #define SMALL_ENOUGH_VELOCITY (constants->climbing_acceleration)
-#define CLOSE_ENOUGH_TO_FLOOR WORLD_TO_FIXED(WORLD_ONE/16)
+#define CLOSE_ENOUGH_TO_FLOOR WORLD_TO_FIXED(WORLD_ONE*16)
 
 #define AIRBORNE_HEIGHT WORLD_TO_FIXED(WORLD_ONE/16)
 
@@ -235,7 +235,7 @@ void adjust_player_for_polygon_height_change(
 	struct player_data *player= get_player_data(player_index);
 	struct physics_variables *variables= &player->variables;
 	struct polygon_data *polygon= get_polygon_data(polygon_index);
-	world_distance old_floor_height= polygon->floor_height;
+	world_distance old_floor_height= polygon->floor_height -10;
 
 	(void) (new_ceiling_height);
 

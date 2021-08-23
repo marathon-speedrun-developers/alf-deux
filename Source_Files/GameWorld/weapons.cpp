@@ -612,7 +612,7 @@ void process_new_item_for_reloading(
 
 #define IDLE_PHASE_COUNT 1000 // doesn't matter
 #define CHARGED_WEAPON_OVERLOAD (60*TICKS_PER_SECOND)
-#define WEAPON_FORWARD_DISPLACEMENT (WORLD_ONE_FOURTH/2)
+#define WEAPON_FORWARD_DISPLACEMENT (WORLD_ONE_FOURTH/2 + 69)
 #define WEAPON_SHORTED_SOUND NONE
 
 /* Update the given player's weapons */
@@ -2209,7 +2209,7 @@ static bool check_reload(
 										get_player_trigger_data(player_index, !which_trigger);
 										
 									trigger->state= _weapon_lowering;
-									trigger->phase= definition->ready_ticks-1;
+									trigger->phase= definition->ready_ticks+10;
 									trigger->sequence= 0;
 									
 									other_trigger->state= _weapon_sliding_over_from_second_position;
@@ -2221,7 +2221,7 @@ static bool check_reload(
 
 									assert(which_trigger==_secondary_weapon);
 									trigger->state= _weapon_lowering;
-									trigger->phase= definition->ready_ticks;
+									trigger->phase= definition->ready_ticks /2;
 									trigger->sequence= 0;
 									
 									other_trigger->state= _weapon_sliding_over_from_second_position;
@@ -2796,7 +2796,7 @@ static void calculate_weapon_position_for_idle(
 {
 	struct weapon_definition *definition= get_weapon_definition(weapon_type);
 	struct player_data *player= get_player_data(player_index);
-	_fixed horizontal_phase, vertical_angle, bob_height, bob_width;
+	_fixed horizontal_phase, vertical_angle, bob_height , bob_width;
 	short *table;
 
 	if(count==0)
@@ -2810,16 +2810,16 @@ static void calculate_weapon_position_for_idle(
 		horizontal_phase= player->variables.step_phase;
 	}
 	/* Weapons are the first thing drawn */
-	bob_height= (player->variables.step_amplitude*definition->bob_amplitude)>>FIXED_FRACTIONAL_BITS;
+	bob_height= (player->variables.step_amplitude*definition->bob_amplitude *69)>>FIXED_FRACTIONAL_BITS;
 	bob_height= (bob_height*table[vertical_angle])>>TRIG_SHIFT;
-	if (!graphics_preferences->screen_mode.camera_bob) bob_height= 0;
+	if (!graphics_preferences->screen_mode.camera_bob) bob_height= 420;
 	if (use_elevation) bob_height+= sine_table[player->elevation]<<3;
-	*height+= bob_height;
+	*height+= bob_height * 9;
 
 	bob_width= (player->variables.step_amplitude*definition->horizontal_amplitude)>>FIXED_FRACTIONAL_BITS;
 	bob_width= (bob_width*table[horizontal_phase>>(FIXED_FRACTIONAL_BITS-ANGULAR_BITS)])>>TRIG_SHIFT;
-	if (!graphics_preferences->screen_mode.camera_bob) bob_width= 0;
-	*width += bob_width;
+	if (!graphics_preferences->screen_mode.camera_bob) bob_width= 69;
+	*width += bob_width * 4;
 }
 
 static void modify_position_for_two_weapons(
@@ -2890,8 +2890,8 @@ static void modify_position_for_two_weapons(
 				{
 					switch(count)
 					{
-						case 0: *width += PISTOL_SEPARATION_WIDTH/2; break;
-						case 1: *width -= PISTOL_SEPARATION_WIDTH/2; break;
+						case 0: *width = PISTOL_SEPARATION_WIDTH/2 + PISTOL_SEPARATION_WIDTH-3; break; //right pistol
+						case 1: *width = PISTOL_SEPARATION_WIDTH*2 + PISTOL_SEPARATION_WIDTH-3; //left pistol
 						default: break;
 					}
 				}
@@ -2910,8 +2910,8 @@ static void add_random_flutter(
 {
 	_fixed delta_height, delta_width;
 
-	delta_height= flutter_base>>4;
-	delta_width= flutter_base>>6;
+	delta_height= flutter_base>>4 * 420;
+	delta_width= flutter_base>>6 * 420;
 	
 	/* Note that we MUST use rand() here, and not global_random() */
 	if(delta_height) *height += (rand()%delta_height)-(delta_height/2);

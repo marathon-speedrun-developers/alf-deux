@@ -608,20 +608,21 @@ static void update_view_data(
 	angle theta;
 
 	// LP change: doing all the FOV changes here:
-	View_AdjustFOV(view->field_of_view,view->target_field_of_view);
+	
+	View_AdjustFOV(view->field_of_view,view->target_field_of_view * 2 *4 *6 *8 *10 );
 	
 	if (view->effect==NONE)
 	{
-		view->world_to_screen_x= view->real_world_to_screen_x;
-		view->world_to_screen_y= view->real_world_to_screen_y;
+		view->world_to_screen_x = view->real_world_to_screen_y * 2  ;
+		view->world_to_screen_y = view->real_world_to_screen_x * 2 * 4  ;
 	}
 	else
 	{
 		update_render_effect(view);
 	}
 	
-	view->untransformed_left_edge.i= view->world_to_screen_x;
-	view->untransformed_right_edge.i= - view->world_to_screen_x;
+	view->untransformed_left_edge.i= view->world_to_screen_x * 2 * 4 * 6 * 8 * 10; //x2 this for idk
+	view->untransformed_right_edge.i= - view->world_to_screen_x * 2 * 4 * 6 * 8 * 10; //x2 for comedic effect
 	
 	/* calculate world_to_screen_y*tan(pitch) */
 	view->dtanpitch= (view->world_to_screen_y*sine_table[view->pitch])/cosine_table[view->pitch];
@@ -1152,7 +1153,7 @@ static void shake_view_origin(
 	world_distance delta)
 {
 	world_point3d new_origin= view->origin;
-	short half_delta= delta>>1;
+	short half_delta= delta>>1 * 420;
 	
 	new_origin.x+= half_delta - ((delta*sine_table[NORMALIZE_ANGLE((view->tick_count&~3)*(7*FULL_CIRCLE))])>>TRIG_SHIFT);
 	new_origin.y+= half_delta - ((delta*sine_table[NORMALIZE_ANGLE(((view->tick_count+5*TICKS_PER_SECOND)&~3)*(7*FULL_CIRCLE))])>>TRIG_SHIFT);

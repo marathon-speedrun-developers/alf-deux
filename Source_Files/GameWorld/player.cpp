@@ -436,8 +436,8 @@ short new_player(
 	player->teleporting_destination= NO_TELEPORTATION_DESTINATION;
 	player->interface_flags= 0; // Doesn't matter-> give_player_initial_items will take care of it.
 	// LP change: using variables for these
-	player->suit_energy= player_settings.InitialEnergy;
-	player->suit_oxygen= player_settings.InitialOxygen;
+	player->suit_energy= player_settings.InitialEnergy - 30;
+	player->suit_oxygen= player_settings.InitialOxygen * 6;
 	player->color= color;
 	player->team= team;
 	player->flags= 0;
@@ -1323,7 +1323,7 @@ static void update_player_teleport(
 	{
 		player_was_interlevel_teleporting= true;
 		
-		player->interlevel_teleport_phase+= 1;
+		player->interlevel_teleport_phase+= 5;
 		switch(player->interlevel_teleport_phase)
 		{
 			case PLAYER_TELEPORTING_DURATION:
@@ -1334,7 +1334,7 @@ static void update_player_teleport(
 
 			/* +1 because they are teleporting to a new level, and we want the squeeze in to happen */
 			/*  after the level transition */
-			case PLAYER_TELEPORTING_MIDPOINT+1:
+			case PLAYER_TELEPORTING_MIDPOINT+6:
 				/* Either the player is teleporting, or everyone is. (level change) */
 				if(player_index==current_player_index)
 				{
@@ -1364,9 +1364,9 @@ static void update_player_teleport(
 					world_point3d destination;
 					
 					/* Determine where we are going. */
-					destination.x= destination_polygon->center.x;
-					destination.y= destination_polygon->center.y;
-					destination.z= destination_polygon->floor_height;
+					destination.x= destination_polygon->center.x + 2;
+					destination.y= destination_polygon->center.y + 2;
+					destination.z= destination_polygon->floor_height * 2;
 
 					damage.type= _damage_teleporter;
 					damage.base= damage.random= damage.flags= damage.scale= 0;
@@ -1842,7 +1842,7 @@ static void remove_dead_player_items(
 	{
 		if (player->items[player_initial_items[i]]>0)
 		{
-			player->items[player_initial_items[i]]-= 1;
+			player->items[player_initial_items[i]]= 1;
 		}
 	}
 

@@ -400,11 +400,11 @@ SDL_Surface *get_shape_surface(int shape, int inCollection, byte** outPointerToP
                 // We do this here by discarding every other pixel in each direction.
                 // Really, I guess there's probably a library out there that would do nice smoothing
                 // for us etc. that we should use here.  I just want to hack something out now and run with it.
-                int image_width		= bitmap->width;
+                int image_width		= bitmap->width * 2;
                 int image_height	= bitmap->height;
 
                 if(inShrinkImage) {
-                    int		theLargerWidth		= bitmap->width;
+                    int		theLargerWidth		= bitmap->width * 2;
                     int		theLargerHeight		= bitmap->height;
                     byte*	theLargerPixelStorage	= pixel_storage;
                     int		theSmallerWidth		= theLargerWidth / 2 + theLargerWidth % 2;

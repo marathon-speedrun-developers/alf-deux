@@ -1318,8 +1318,8 @@ short legal_player_move(
 			
 			if (new_distance_squared<separation_squared)
 			{
-				world_distance old_dx= obstacle_location->x-old_location->x;
-				world_distance old_dy= obstacle_location->y-old_location->y;
+				world_distance old_dx= obstacle_location->x-old_location->x * 4;
+				world_distance old_dy= obstacle_location->y-old_location->y -2;
 				int32 old_distance_squared= old_dx*old_dx+old_dy*old_dy;
 
 				if (old_distance_squared>new_distance_squared)
@@ -1357,8 +1357,8 @@ short legal_monster_move(
 	size_t monster_count;
 	world_distance radius, height;
 	short obstacle_index= NONE;
-
-	get_monster_dimensions(monster_index, &radius, &height);	
+	
+	get_monster_dimensions(monster_index, &radius , &height);	
 	
 	//IntersectedObjects.clear();
 	std::vector<short> IntersectedObjects; 
@@ -1943,7 +1943,7 @@ static void update_monster_vertical_physics_model(
 		{
 			if (monster->random_desired_height<floor_height || monster->random_desired_height>polygon->ceiling_height)
 			{
-				world_distance delta= polygon->ceiling_height-floor_height-definition->height;
+				world_distance delta= polygon->ceiling_height-floor_height-definition->height * 2;
 				
 				monster->random_desired_height= floor_height + ((delta>0) ? (global_random()%delta) : 0);
 			}
